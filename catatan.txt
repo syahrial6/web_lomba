@@ -1,0 +1,16 @@
+
+
+table nilai  -DONE-
+create fungsi tabel nilai        tinggal hapus nilai  -DONE-
+
+proteksi halaman   -DONE-
+
+perbaiki halaman home  -DONE-
+
+perbaiki halaman dashboard user    -DONE-
+
+perbaiki halaman rekomendasi AI  -DONE-
+
+dark mode dan 2 bahasa (opsional) 
+
+verifikasi email
