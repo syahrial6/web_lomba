@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import {z} from "zod";
+import {put} from "@vercel/blob"
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -113,7 +114,32 @@ export const verfiedEmail = async ({id,otp})=>{
     }
 };
 
-
+export const editAvatarUser = async (FormData)=>{
+    const validatedField = schema.safeParse(
+        Object.fromEntries(FormData.entries())
+    )
+    if (!validatedField.success){
+        return {error:validatedField.error.flatten().fieldErrors}
+    }
+    const {image} = validatedField.data
+    const {url} = await put(image.name,image,{
+        access:"public",
+        multipart:true
+    })
+    try {
+        await prisma.user.update({
+            where:{
+                id:id
+            },
+            data:{
+                image:url
+            }
+        })
+        return {message:"Avatar Updated"}
+    } catch (error) {
+        return {error:error.message}
+    }
+}
 
 export const sendEmail = async () => {
     try {

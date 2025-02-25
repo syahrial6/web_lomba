@@ -11,8 +11,11 @@ import {
   Input,
 } from "@heroui/react";
 import {  Pencil } from "lucide-react";
+import { editAvatarUser } from "../actions/user";
+
 
 const ModalEditFoto = () => {
+ 
   const [imagePreview, setImagePreview] = useState(null);
 
   const handleFileChange = (e) => {
@@ -21,6 +24,7 @@ const ModalEditFoto = () => {
       const previewUrl = URL.createObjectURL(file); // Buat URL sementara
       setImagePreview(previewUrl); // Simpan URL ke state
     }
+    editAvatarUser(file);
   };
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
@@ -36,6 +40,7 @@ const ModalEditFoto = () => {
                 Edit Foto
               </ModalHeader>
               <ModalBody>
+                <form onSubmit={handleFileChange}>
                 <Input
                   type="file"
                   accept="image/*"
@@ -48,12 +53,14 @@ const ModalEditFoto = () => {
                   alt="foto"
                   className="flex justify-center items-center m-auto w-24 h-24 rounded-full"
                 />
+                </form>
               </ModalBody>
+              
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button type="submit" color="primary" onPress={onClose}>
                   Simpan
                 </Button>
               </ModalFooter>
