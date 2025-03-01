@@ -36,11 +36,31 @@ export const getMinat = async()=>{
     }
 }
 
-export const getMinatByIdUser = async(id)=>{
+export const top3Minat = async()=>{
+    try {
+        const minat = await prisma.minat.groupBy({
+            by:["minat"],
+            _count:{
+                minat:true
+            },
+            orderBy: {
+                _count: {
+                  minat: "desc",
+                },
+              },
+            take:3
+        })
+        return {minat}
+    } catch (error) {
+        return {error:error.message}
+    }
+}
+
+export const getMinatByIdUser = async(userId)=>{
     try {
         const minat = await prisma.minat.findMany({
             where:{
-                userId:id
+                userId:userId
             }
         })
         if (!minat) {

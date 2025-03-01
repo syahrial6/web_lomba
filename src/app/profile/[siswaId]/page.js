@@ -17,19 +17,21 @@ const StudentDashboard = ({ params }) => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [respon, setRespon] = useState(null);
+ 
 
  
 
   const fetchingData = async (userId) => {
-    const { minat, error } = await getMinatByIdUser(session.user.userId);
+    const { minat, error } = await getMinatByIdUser(session.user.id);
     if (error) {
       alert(error);
     }
+    
     return minat;
   };
 
   const fetchingDataNilai = async (userId) => {
-    const { nilai, error } = await getNilaiByIdUser(session.user.userId);
+    const { nilai, error } = await getNilaiByIdUser(session.user.id);
     if (error) {
       alert(error);
     }
@@ -100,7 +102,7 @@ const StudentDashboard = ({ params }) => {
       <p className="text-2xl text-blue-500 font-bold font-Poppins mb-4">
         Welcome Back ! {session?.user.name}
       </p>
-      <Breadcrumbs color="primary">
+      <Breadcrumbs className="inline-block mb-4">
         <BreadcrumbItem size="lg">Profile</BreadcrumbItem>
         <BreadcrumbItem size="lg" className="text-blue-300">
           {session?.user.name}

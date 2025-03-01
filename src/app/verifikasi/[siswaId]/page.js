@@ -33,7 +33,7 @@ const Verifikasi = ({ params }) => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="container w-[30%] h-[200px] m-auto shadow-lg">
-        <button onClick={() => sendEmail()}>Kirim</button>
+        <button onClick={() => sendEmail(unwrap.siswaId)}>Kirim</button>
         <p className="text-2xl text-center text-blue-500 font-bold font-Poppins mb-4">
           Verifikasi
         </p>

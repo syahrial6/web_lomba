@@ -12,9 +12,8 @@ import ModalEditFoto from "./ModalEditFoto";
 import { deleteNilai } from "../actions/nilai";
 
 const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
-  const nilai2 = [];
   const nilaiSem1 = nilai.filter((item) => item.semester === 1);
-  const nilaiSem2 = nilai2.filter((item) => item.semester === 2);
+  const nilaiSem2 = nilai.filter((item) => item.semester === 2);
   const hapusMinat = async (id) => {
     const result = await Swal.fire({
       title: "Apakah Anda Yakin ?",
@@ -189,11 +188,11 @@ const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
         </p>
         <ModalTambahNilai user={user} />
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 shadow-lg">
-          {nilaiSem1.length === 0 && <p>Belum Ada Nilai</p>}
           <div className="shadow-lg px-8 bg-white rounded-lg">
+          {nilaiSem1.length === 0 && <p className="text-center text-xl text-[#123FC6]">Belum Ada Nilai</p>}
             <p className="text-center text-xl mb-4 text-[#123FC6] font-Poppins">
               Semester 1
-            </p>
+            </p>{" "}
             {nilaiSem1.length !== 0 && 
             <table className="w-full text-sm text-left text-[#123FC6] bg-white  rounded-xl">
               <thead className="bg-blue-50">

@@ -21,6 +21,7 @@ const Register = () => {
 
     const FormSubmit = async(data)=>{
         const {error,message,user} = await createUser(data);
+        console.log(error,message,user);
         if(error){
             alert(error);
         }

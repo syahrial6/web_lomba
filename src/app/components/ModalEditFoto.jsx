@@ -12,20 +12,23 @@ import {
 } from "@heroui/react";
 import {  Pencil } from "lucide-react";
 import { editAvatarUser } from "../actions/user";
+import { Form } from "react-hook-form";
 
 
 const ModalEditFoto = () => {
  
   const [imagePreview, setImagePreview] = useState(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Ambil file pertama yang diunggah
-    if (file) {
-      const previewUrl = URL.createObjectURL(file); // Buat URL sementara
-      setImagePreview(previewUrl); // Simpan URL ke state
-    }
-    editAvatarUser(file);
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0]; // Ambil file pertama yang diunggah
+  //   if (file) {
+  //     new FormData().append("file", file);
+  //     editAvatarUser(file);
+  //     const previewUrl = URL.createObjectURL(file); // Buat URL sementara
+  //     setImagePreview(previewUrl); // Simpan URL ke state
+  //   }
+  //   editAvatarUser(file);
+  // };
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <>

@@ -5,7 +5,7 @@ import { Bot, LayoutDashboard, User } from 'lucide-react'
 const TabsComponent = ({profile,tableNilai,dashboard,rekomendasi_ai}) => {
   return (
     <div className="flex w-full flex-col">
-        <Tabs fullWidth="true" aria-label="Options" color="primary" variant="bordered">
+        <Tabs fullWidth="true" aria-label="Options" color='primary' variant="bordered">
           <Tab
             key="profile"
             title={
