@@ -11,7 +11,7 @@ const TabsComponent = ({profile,tableNilai,dashboard,rekomendasi_ai}) => {
             title={
               <div className="flex items-center space-x-2">
                 <User />
-                <span>Profile</span>
+                <span className='lg:block hidden'>Profile</span>
               </div>
             }
           >
@@ -26,7 +26,7 @@ const TabsComponent = ({profile,tableNilai,dashboard,rekomendasi_ai}) => {
             title={
               <div className="flex items-center space-x-2">
                 <LayoutDashboard />
-                <span>Dashboard</span>
+                <span className='lg:block hidden'>Dashboard</span>
               </div>
             }
           >
@@ -41,7 +41,7 @@ const TabsComponent = ({profile,tableNilai,dashboard,rekomendasi_ai}) => {
             title={
               <div className="flex items-center space-x-2">
                 <Bot />
-                <span>Rekomendasi Ai</span>
+                <span className='lg:block hidden'>Rekomendasi Ai</span>
               </div>
             }
           >

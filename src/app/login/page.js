@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@heroui/input";
 import Link from "next/link";
 import { Button } from "@heroui/react";
@@ -9,16 +9,16 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FaGoogle } from "react-icons/fa";
+import Loading from "../components/Loading";
 
 const Login = () => {
- const { data: session,status } = useSession();
+  const { data: session, status } = useSession();
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
- 
- 
 
   const handleLogin = async (loginData) => {
+    
     setLoading(true);
     try {
       const signInResult = await signIn("credentials", {
@@ -29,7 +29,13 @@ const Login = () => {
 
       if (signInResult.ok) {
         const session = await getSession();
-        router.push(`/profile/${session?.user?.id}`);
+        if (session.user.role === "user") {
+          router.push(`/profile/${session?.user?.id}`);
+        }
+        else{
+          router.push(`/dashboard`);
+        }
+        
       } else {
         Swal.fire({
           icon: "error",
@@ -45,22 +51,15 @@ const Login = () => {
 
   const handleSignInWithGoogle = async () => {
     try {
-        console.log("masuk");
-        await signIn("google", { redirect: false });
+      await signIn("google", { redirect: true ,callbackUrl: "/profile"});
+      console.log(signIn);
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
     }
-};
-useEffect(() => {
-  if (status === "authenticated" && session?.user?.id) {
-      router.push(`/profile/${session.user.id}`);
+  };
+  if (status === "loading") {
+    return(<div className="m-auto flex justify-center items-center"> <Loading /></div>);
   }
-}, [status, session, router]);
-
-if (status === "loading") {
-  return <p>Loading...</p>;
-}
-  
 
   return (
     <div className="container grid lg:grid-cols-2 font-Poppins h-screen">
@@ -104,17 +103,16 @@ if (status === "loading") {
                 {loading ? "Loading..." : "Login"}
               </Button>
             </form>
-            <form
-            
-            action={async()=>{
-              await handleSignInWithGoogle();
-            }}>
+
             <div className="flex w-fit mt-4 m-auto gap-3">
-              <Button type="submit" className="w-full bg-white text-[#123FC6]">
-                <FaGoogle/> Sign In With Google
+              <Button
+                onPress={() => handleSignInWithGoogle()}
+                type="submit"
+                className="w-full bg-white text-[#123FC6]"
+              >
+                <FaGoogle /> Sign In With Google
               </Button>
             </div>
-            </form>
           </div>
         </div>
       </div>

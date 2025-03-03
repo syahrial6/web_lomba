@@ -24,10 +24,11 @@ const Dashboard = ({ nilai }) => {
     nilaiSem2.reduce((acc, item) => acc + item.nilai, 0) / nilaiSem2.length || 0;
   return (
     <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-      <div className="m-auto">
+      <div className="m-auto w-full">
         <p className="text-2xl font-Poppins font-bold text-center">
           Grafik Semester 1
         </p>
+        <ResponsiveContainer width="100%" height={300}>
         <ComposedChart
           className=""
           width={500}
@@ -54,11 +55,13 @@ const Dashboard = ({ nilai }) => {
           <Bar dataKey="nilai" barSize={10} fill="#413ea0" />
           <Line type="monotone" dataKey="nilai" stroke="#ff7300" />
         </ComposedChart>
+        </ResponsiveContainer>
       </div>
-      <div className="m-auto">
+      <div className="m-auto w-full">
         <p className="text-2xl font-Poppins font-bold text-center">
           Grafik Semester 2
         </p>
+        <ResponsiveContainer width="100%" height={300}>
         <ComposedChart
           className=""
           width={500}
@@ -85,12 +88,13 @@ const Dashboard = ({ nilai }) => {
           <Bar dataKey="nilai" barSize={10} fill="#413ea0" />
           <Line type="monotone" dataKey="nilai" stroke="#ff7300" />
         </ComposedChart>
+        </ResponsiveContainer>
       </div>
       <div>
         <Card>
           <CardBody>
             Rata-rata Nilai Semester 1:
-            <span className="font-bold block"> {rata_rataSem1}</span>
+            <span className="font-bold block"> {rata_rataSem1.toFixed(2)}</span>
           </CardBody>
         </Card>
       </div>
@@ -98,7 +102,7 @@ const Dashboard = ({ nilai }) => {
         <Card>
           <CardBody>
             Rata-rata Nilai Semester 2:{" "}
-            <span className="font-bold block">{rata_rataSem2}</span>
+            <span className="font-bold block">{rata_rataSem2.toFixed(2)}</span>
           </CardBody>
         </Card>
       </div>

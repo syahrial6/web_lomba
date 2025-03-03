@@ -13,20 +13,18 @@ import { getMinatByIdUser } from "@/app/actions/minat";
 import RekomendasiAi from "@/app/components/RekomendasiAi";
 import { getNilaiByIdUser } from "@/app/actions/nilai";
 import axios from "axios";
+import NavbarComponent from "@/app/components/Navbar";
 const StudentDashboard = ({ params }) => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [respon, setRespon] = useState(null);
- 
-
- 
 
   const fetchingData = async (userId) => {
     const { minat, error } = await getMinatByIdUser(session.user.id);
     if (error) {
       alert(error);
     }
-    
+
     return minat;
   };
 
@@ -65,7 +63,6 @@ const StudentDashboard = ({ params }) => {
       setLoading(false);
     }
   };
- 
 
   const queryMinat = useQuery({
     queryKey: ["minat"],
@@ -98,40 +95,40 @@ const StudentDashboard = ({ params }) => {
   }
 
   return (
-    <div className="container w-[85vw]  m-auto mt-12">
-      <p className="text-2xl text-blue-500 font-bold font-Poppins mb-4">
-        Welcome Back ! {session?.user.name}
-      </p>
-      <Breadcrumbs className="inline-block mb-4">
-        <BreadcrumbItem size="lg">Profile</BreadcrumbItem>
-        <BreadcrumbItem size="lg" className="text-blue-300">
-          {session?.user.name}
-        </BreadcrumbItem>
-      </Breadcrumbs>
+    <div className="container w-[85vw]  m-auto">
+      <NavbarComponent />
+      <div className="container w-[85vw]  m-auto mt-8">
+        <p className="lg:text-2xl text-blue-500 font-bold font-Poppins mb-4">
+          Welcome Back ! {session?.user.name}
+        </p>
+        <Breadcrumbs className="inline-block mb-4">
+          <BreadcrumbItem size="lg">Profile</BreadcrumbItem>
+          <BreadcrumbItem size="lg" className="text-blue-300">
+            {session?.user.name}
+          </BreadcrumbItem>
+        </Breadcrumbs>
 
-      <TabsComponent
-        profile={
-          <CardProfile
-          // rekomendasiJurusan={respon ? respon : <div className="flex items-center justify-center h-screen">
-          //   <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          // </div>
-          // }
-            user={session?.user}
-            jurusan={queryMinat?.data}
-            nilai={queryNilai?.data}
-          />
-        }
-        dashboard={<Dashboard nilai={queryNilai?.data} />}
-        rekomendasi_ai={
-          <RekomendasiAi nilai={queryNilai?.data} jurusan={queryMinat?.data} />
-        }
-      />
-      <Button
-        className="bg-red-500 text-white"
-        onClick={() => signOut({ callbackUrl: "http://localhost:3000/login" })}
-      >
-        Log out
-      </Button>
+        <TabsComponent
+          profile={
+            <CardProfile
+              // rekomendasiJurusan={respon ? respon : <div className="flex items-center justify-center h-screen">
+              //   <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              // </div>
+              // }
+              user={session?.user}
+              jurusan={queryMinat?.data}
+              nilai={queryNilai?.data}
+            />
+          }
+          dashboard={<Dashboard nilai={queryNilai?.data} />}
+          rekomendasi_ai={
+            <RekomendasiAi
+              nilai={queryNilai?.data}
+              jurusan={queryMinat?.data}
+            />
+          }
+        />
+      </div>
     </div>
   );
 };

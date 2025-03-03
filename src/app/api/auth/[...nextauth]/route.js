@@ -37,7 +37,7 @@ export const authOptions = {
           throw new Error("Password salah");
         }
 
-        return { id: user.id, email: user.email, name: user.name };
+        return { id: user.id, email: user.email, name: user.name,image:user.image || "",role:user.role };
       },
     }),
   ],
@@ -66,6 +66,7 @@ export const authOptions = {
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.email = token.email;
+      session.user.image = session.user.image.replace(/=s\d+-c/, "=s400-c");
       return session;
     },
   },
