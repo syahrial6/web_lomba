@@ -6,6 +6,8 @@ import { put } from "@vercel/blob";
 import nodemailer from "nodemailer";
 import { select } from "@heroui/theme";
 import Nilai from "../dashboard/nilai/page";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/dist/server/api-utils";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -16,19 +18,48 @@ const transporter = nodemailer.createTransport({
 });
 
 const schema = z.object({
-  title: z.string(),
   file: z
     .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "File Harus Diisi",
+    })
     .refine((file) => file.size < 1000000, {
       message: "File Harus Kurang dari 1MB",
-    })
-    .refine((file) => file.size < 0, {
-      message: "File Harus Diisi",
     })
     .refine((file) => file.type.startsWith("image/"), {
       message: "File Harus Berupa Gambar",
     }),
 });
+
+
+export const editAvatarUser = async (id, formData) => {
+  const file = formData.get("file");
+
+  const validatedField = schema.safeParse({ file });
+
+  if (!validatedField.success) {
+    console.log("Validation Error:", validatedField.error.flatten().fieldErrors);
+    return { error: validatedField.error.flatten().fieldErrors };
+  }
+
+  const { url } = await put(file.name, file, {
+    access: "public",
+    multipart: true,
+  });
+
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: { image: url },
+    });
+
+    return { message: "Avatar Updated" };
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return { error: error.message };
+  }
+};
+
 
 export const getUser = async () => {
   try {
@@ -131,32 +162,7 @@ export const verfiedEmail = async ({ id, otp }) => {
   }
 };
 
-export const editAvatarUser = async (FormData) => {
-  const validatedField = schema.safeParse(
-    Object.fromEntries(FormData.entries())
-  );
-  if (!validatedField.success) {
-    return { error: validatedField.error.flatten().fieldErrors };
-  }
-  const { image } = validatedField.data;
-  const { url } = await put(image.name, image, {
-    access: "public",
-    multipart: true,
-  });
-  try {
-    await prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        image: url,
-      },
-    });
-    return { message: "Avatar Updated" };
-  } catch (error) {
-    return { error: error.message };
-  }
-};
+
 
 export const sendEmail = async (id) => {
   try {
@@ -170,6 +176,15 @@ export const sendEmail = async (id) => {
         otp: otp,
       },
     });
+
+    const User = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!getUser) {
+      return { error: "User Not Found" };
+    }
 
     // 🔹 Template email
     const htmlTemplate = `
@@ -218,19 +233,18 @@ export const sendEmail = async (id) => {
     // 🔹 Opsi email
     const mailOptions = {
       from: "syr0606rial@student.untan.ac.id",
-      to: "syr06rial@gmail.com",
+      to: User.email,
       subject: "Your OTP for Email Verification",
       text: `Your OTP is ${otp}. Valid for 10 minutes.`,
       html: htmlTemplate,
     };
 
-    console.log("Mail Options:", mailOptions); // Debugging
-
+  
     // 🔹 Kirim email dengan async/await
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent:", info.response);
 
-    return { message: "Email Sent" };
+    return { message: "Kami Telah Mengirimkan Kode OTP Ke Email Anda" };
   } catch (error) {
     console.log("Error sending email:", error);
     throw error;

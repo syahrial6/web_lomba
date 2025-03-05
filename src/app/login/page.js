@@ -28,13 +28,7 @@ const Login = () => {
       });
 
       if (signInResult.ok) {
-        const session = await getSession();
-        if (session.user.role === "user") {
-          router.push(`/profile/${session?.user?.id}`);
-        }
-        else{
-          router.push(`/dashboard`);
-        }
+        router.push("/profile");
         
       } else {
         Swal.fire({
@@ -51,8 +45,10 @@ const Login = () => {
 
   const handleSignInWithGoogle = async () => {
     try {
-      await signIn("google", { redirect: true ,callbackUrl: "/profile"});
-      console.log(signIn);
+      await signIn("google", {
+        callbackUrl: `/profile`,
+      });
+      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -69,7 +65,7 @@ const Login = () => {
             <MoveLeft size={30} />
           </Link>
         </div>
-        <div className="lg:px-48 px-16 py-32">
+        <div className="lg:px-48 px-4 py-32">
           <div className="shadow-lg p-8 bg-white rounded-lg">
             <form onSubmit={handleSubmit(handleLogin)}>
               <p className="text-2xl font-bold text-center mb-8 text-[#123FC6]">
@@ -112,7 +108,9 @@ const Login = () => {
               >
                 <FaGoogle /> Sign In With Google
               </Button>
+             
             </div>
+            <a href="/register"><Button type="submit" className="w-full bg-white text-[#123FC6]">Belum Punya Akun ?</Button></a>
           </div>
         </div>
       </div>

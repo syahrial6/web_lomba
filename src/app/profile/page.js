@@ -1,27 +1,23 @@
-'use client'
-import React, { useEffect } from "react";
+
+import React from "react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import Loading from "../components/Loading";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-const Profile = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
+const Profile = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+  if (!session) redirect("/login");
 
-  const cekLogin = async () => {
-    if (status === "authenticated" && session !== null) {
-      router.push(`/profile/${session.user.id}`);
-    }
-  };
-  useEffect(() => {
-    cekLogin();
-  }, [status, session]);
-
-  return (
-    <div className="m-auto flex justify-center items-center h-screen w-screen">
-      {status === "loading" && <Loading />}
-    </div>
-  );
+  if (session.user.role === "user") {
+    redirect(`/profile/${session.user.id}`);
+  } else if (session.user.role === "admin") {
+    redirect("/dashboard");
+  }
+  else{
+    return (<Loading/>)
+  }
 };
 
 export default Profile;

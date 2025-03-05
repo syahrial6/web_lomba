@@ -26,14 +26,35 @@ const Verifikasi = ({ params }) => {
       alert(error);
     }
   };
+
+
+  const kirimEmail = async () => {
+    const {message,error} = await sendEmail(unwrap.siswaId);
+    if (message){
+      Swal.fire({
+        icon: "success",
+        title: "Email Berhasil Terkirim",
+        text: message,
+      })
+      console.log(message);
+    }
+    if (error){
+      alert(error);
+    }
+   
+  }
   useEffect(() => {
     verifikasiEmail();
   }, [value]);
 
+  useEffect(() => {
+   kirimEmail();
+  }, []);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="container w-[30%] h-[200px] m-auto shadow-lg">
-        <button onClick={() => sendEmail(unwrap.siswaId)}>Kirim</button>
+       
         <p className="text-2xl text-center text-blue-500 font-bold font-Poppins mb-4">
           Verifikasi
         </p>

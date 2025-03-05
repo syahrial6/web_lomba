@@ -11,9 +11,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import ModalEditFoto from "./ModalEditFoto";
 import { deleteNilai } from "../actions/nilai";
 import Image from "next/image";
+import Loading from "./Loading";
 
 const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
-  console.log(user);
   const nilaiSem1 = nilai.filter((item) => item.semester === 1);
   const nilaiSem2 = nilai.filter((item) => item.semester === 2);
   const hapusMinat = async (id) => {
@@ -98,12 +98,12 @@ const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
     <div>
       <div className="grid lg:grid-cols-4 grid-cols-1 font-Poppins">
         <div className="m-auto w-full flex justify-items-end h-full col-span-1">
-          <ModalEditFoto />
+          <ModalEditFoto userId={user.id} />
           {user.image ? (
             <Image
               width={192}
               height={192}
-              src={"https://lh3.googleusercontent.com/a/ACg8ocLaNRoxYpPgHWsE3oMGIbwlFqh5xCs8lQP3iAU9qPAPAAR5cWM=s300-c"}
+              src={user.image}
               className="m-auto w-48 h-48 rounded-full"
               alt=""
             />
@@ -124,17 +124,12 @@ const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
               <tr className="">
                 <td className="lg:text-xl  text-[#123FC6]">Nama</td>
                 <td className="lg:text-xl  text-[#123FC6]">:</td>
-                <td className="lg:text-xl  text-[#123FC6]">
-                  {" "}
-                  {user?.name}
-                </td>
+                <td className="lg:text-xl  text-[#123FC6]"> {user?.name}</td>
               </tr>
               <tr>
                 <td className="lg:text-xl  text-[#123FC6]">Email</td>
                 <td className="lg:text-xl  text-[#123FC6]">:</td>
-                <td className="lg:text-xl  text-[#123FC6]">
-                  {user?.email}
-                </td>
+                <td className="lg:text-xl  text-[#123FC6]">{user?.email}</td>
               </tr>
             </tbody>
           </table>
@@ -199,101 +194,109 @@ const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
           Nilai Mata Pelajaran
         </p>
         <ModalTambahNilai user={user} />
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 shadow-lg">
-          <div className="shadow-lg px-8 bg-white rounded-lg">
-            {nilaiSem1.length === 0 && (
-              <p className="text-center text-xl text-[#123FC6]">
-                Belum Ada Nilai
-              </p>
-            )}
-            <p className="text-center text-xl mb-4 text-[#123FC6] font-Poppins">
-              Semester 1
-            </p>{" "}
-            {nilaiSem1.length !== 0 && (
-              <table className="w-full text-sm text-left text-[#123FC6] bg-white  rounded-xl">
-                <thead className="bg-blue-50">
-                  <tr>
-                    <th className="px-6 py-3 font-semibold text-gray-800">
-                      Mata Pelajaran
-                    </th>
-                    <th className="px-6 py-3 font-semibold text-gray-800">
-                      Nilai
-                    </th>
-                    <th className="px-6 py-3 text-center font-semibold text-gray-800">
-                      Aksi
-                    </th>
-                  </tr>
-                </thead>
+        {nilai ? (
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 shadow-lg">
+            <div className="shadow-lg px-8 bg-white rounded-lg">
+              {nilaiSem1.length === 0 && (
+                <p className="text-center text-xl text-[#123FC6]">
+                  Belum Ada Nilai
+                </p>
+              )}
+              <p className="text-center text-xl mb-4 text-[#123FC6] font-Poppins">
+                Semester 1
+              </p>{" "}
+              {nilaiSem1.length !== 0 && (
+                <table className="w-full text-sm text-left text-[#123FC6] bg-white  rounded-xl">
+                  <thead className="bg-blue-50">
+                    <tr>
+                      <th className="px-6 py-3 font-semibold text-gray-800">
+                        Mata Pelajaran
+                      </th>
+                      <th className="px-6 py-3 font-semibold text-gray-800">
+                        Nilai
+                      </th>
+                      <th className="px-6 py-3 text-center font-semibold text-gray-800">
+                        Aksi
+                      </th>
+                    </tr>
+                  </thead>
 
-                <tbody className="">
-                  {nilaiSem1.map((item) => (
-                    <tr key={item.id} className="">
-                      <td className="  px-6 py-1 font-medium">
-                        {item.mata_pelajaran}
-                      </td>
-                      <td className="  px-6 py-1 font-medium">{item.nilai}</td>
-                      <td className="px-6 py-1 text-center">
-                        <Button
-                          isIconOnly
-                          className=" text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
-                          onClick={() => mutation.mutate(item.id)}
-                        >
-                          <Trash size={"15"} />
-                        </Button>
-                      </td>
+                  <tbody className="">
+                    {nilaiSem1.map((item) => (
+                      <tr key={item.id} className="">
+                        <td className="  px-6 py-1 font-medium">
+                          {item.mata_pelajaran}
+                        </td>
+                        <td className="  px-6 py-1 font-medium">
+                          {item.nilai}
+                        </td>
+                        <td className="px-6 py-1 text-center">
+                          <Button
+                            isIconOnly
+                            className=" text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
+                            onClick={() => mutation.mutate(item.id)}
+                          >
+                            <Trash size={"15"} />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            <div className="shadow-lg px-8 bg-white rounded-lg">
+              {nilaiSem2.length === 0 && (
+                <p className="text-center text-xl text-[#123FC6]">
+                  Belum Ada Nilai
+                </p>
+              )}
+              <p className="text-center text-xl mb-4 text-[#123FC6] font-Poppins">
+                Semester 2
+              </p>{" "}
+              {nilaiSem2.length !== 0 && (
+                <table className="w-full text-sm text-left text-[#123FC6] bg-white  rounded-xl">
+                  <thead className="bg-blue-50">
+                    <tr>
+                      <th className="px-6 py-3 font-semibold text-gray-800">
+                        Mata Pelajaran
+                      </th>
+                      <th className="px-6 py-3 font-semibold text-gray-800">
+                        Nilai
+                      </th>
+                      <th className="px-6 py-3 text-center font-semibold text-gray-800">
+                        Aksi
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+                  </thead>
+                  <tbody className="">
+                    {nilaiSem2.map((item) => (
+                      <tr key={item.id} className="">
+                        <td className="  px-6 py-1 font-medium">
+                          {item.mata_pelajaran}
+                        </td>
+                        <td className="  px-6 py-1 font-medium">
+                          {item.nilai}
+                        </td>
+                        <td className="px-6 py-1 text-center">
+                          <Button
+                            isIconOnly
+                            className=" text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
+                            onClick={() => mutation.mutate(item.id)}
+                          >
+                            <Trash size={"15"} />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
           </div>
-          <div className="shadow-lg px-8 bg-white rounded-lg">
-            {nilaiSem2.length === 0 && (
-              <p className="text-center text-xl text-[#123FC6]">
-                Belum Ada Nilai
-              </p>
-            )}
-            <p className="text-center text-xl mb-4 text-[#123FC6] font-Poppins">
-              Semester 2
-            </p>{" "}
-            {nilaiSem2.length !== 0 && (
-              <table className="w-full text-sm text-left text-[#123FC6] bg-white  rounded-xl">
-                <thead className="bg-blue-50">
-                  <tr>
-                    <th className="px-6 py-3 font-semibold text-gray-800">
-                      Mata Pelajaran
-                    </th>
-                    <th className="px-6 py-3 font-semibold text-gray-800">
-                      Nilai
-                    </th>
-                    <th className="px-6 py-3 text-center font-semibold text-gray-800">
-                      Aksi
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="">
-                  {nilaiSem2.map((item) => (
-                    <tr key={item.id} className="">
-                      <td className="  px-6 py-1 font-medium">
-                        {item.mata_pelajaran}
-                      </td>
-                      <td className="  px-6 py-1 font-medium">{item.nilai}</td>
-                      <td className="px-6 py-1 text-center">
-                        <Button
-                          isIconOnly
-                          className=" text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
-                          onClick={() => mutation.mutate(item.id)}
-                        >
-                          <Trash size={"15"} />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
+        ) : (
+          <Loading />
+        )}
       </div>
     </div>
   );

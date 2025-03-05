@@ -21,7 +21,7 @@ const mataPelajaran = [
   { key: 2, label: "Fisika", value: "Fisika" },
   { key: 3, label: "Biologi", value: "Biologi" },
   { key: 4, label: "Kimia", value: "Kimia" },
-  { key: 5, label: "Geologi", value: "Geologi" },
+  { key: 5, label: "Sosiologi", value: "Sosiologi" },
   { key: 6, label: "Ekonomi", value: "Ekonomi" },
   { key: 7, label: "Sejarah", value: "Sejarah" },
   { key: 8, label: "Geografi", value: "Geografi" },
@@ -30,12 +30,10 @@ const mataPelajaran = [
   { key: 11, label: "Seni Budaya", value: "Seni Budaya" },
   { key: 12, label: "Pendidikan Jasmani", value: "Pendidikan Jasmani" },
   { key: 13, label: "Pendidikan Agama", value: "Pendidikan Agama" },
-  { key: 14, label: "Pendidikan Pancasila", value: "Pendidikan Pancasila" },
-  { key: 15, label: "Prakarya", value: "Prakarya" },
-  { key: 16, label: "TIK", value: "TIK" },
-  { key: 17, label: "PKWU", value: "PKWU" },
-  { key: 18, label: "Kewirausahaan", value: "Kewirausahaan" },
-  { key: 19, label: "Bimbingan Konseling", value: "Bimbingan Konseling" },
+  { key: 14, label: "Pendidikan Pancasila Kewarganegaraan", value: "Pendidikan Pancasila Kewarganegaraan" },
+  { key: 15, label: "Informatika", value: "Informatika" },
+  { key: 16, label: "Tajwid", value: "Tajwid" },
+  { key: 17, label: "Bahasa Arab", value: "Bahasa Arab" },
 
 ];
 

@@ -60,6 +60,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.role = user.role;
       }
       return token;
     },
@@ -67,6 +68,7 @@ export const authOptions = {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.image = session.user.image.replace(/=s\d+-c/, "=s400-c");
+      session.user.role = token.role
       return session;
     },
   },

@@ -74,9 +74,9 @@ const StudentDashboard = ({ params }) => {
     queryFn: fetchingDataNilai,
   });
 
-  useEffect(() => {
-    geminiAPI();
-  }, []);
+  // useEffect(() => {
+  //   geminiAPI();
+  // }, [geminiAPI, queryNilai]);
 
   if (!session) {
     return (
@@ -111,10 +111,10 @@ const StudentDashboard = ({ params }) => {
         <TabsComponent
           profile={
             <CardProfile
-              // rekomendasiJurusan={respon ? respon : <div className="flex items-center justify-center h-screen">
-              //   <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              // </div>
-              // }
+              rekomendasiJurusan={respon ? respon : <div className="flex items-center justify-center h-screen">
+                <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+              }
               user={session?.user}
               jurusan={queryMinat?.data}
               nilai={queryNilai?.data}
