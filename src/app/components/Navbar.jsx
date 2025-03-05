@@ -38,30 +38,32 @@ export default function NavbarComponent() {
       <Navbar shouldHideOnScroll maxWidth="full">
         <NavbarBrand>
           <motion.img
-           initial={{ y: -100 ,opacity:0 }}
-           animate={{ y: 0,opacity:1 }}
-           transition={{
-            duration: 0.5,
-            delay: 0.2,
-            ease: [0, 0.71, 0.2, 1.01],
-           }}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.2,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
             src="https://alfityankuburaya.sch.id/storage/settings/June2021/BRSlJSDjyL31H6I8Ozzh.png"
             className="w-14 h-12"
           />
         </NavbarBrand>
         <NavbarContent justify="end">
           <NavbarItem className="lg:flex">
-            <Link href={"/login"}>
-              <Button className="text-white bg-blue-500 rounded-full px-6">
-                Login
-              </Button>
+            <Link
+              href="/login"
+              className="text-white bg-blue-500 rounded-full px-6 py-2"
+            >
+              Login
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link href={"/register"}>
-              <Button className="text-blue-500 bg-white outline-blue-500 rounded-full px-6">
-                Register
-              </Button>
+            <Link
+              href="/register"
+              className="text-blue-500 bg-white outline outline-1 outline-blue-500 rounded-full px-6 py-2"
+            >
+              Register
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -71,17 +73,17 @@ export default function NavbarComponent() {
   return (
     <Navbar shouldHideOnScroll maxWidth="full">
       <NavbarBrand>
-      <motion.img
-           initial={{ y: -100 ,opacity:0 }}
-           animate={{ y: 0,opacity:1 }}
-           transition={{
-             duration: 0.5,
-             delay: 0.2,
-             ease: [0, 0.71, 0.2, 1.01],
-           }}
-            src="https://alfityankuburaya.sch.id/storage/settings/June2021/BRSlJSDjyL31H6I8Ozzh.png"
-            className="w-14 h-12"
-          />
+        <motion.img
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.2,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+          src="https://alfityankuburaya.sch.id/storage/settings/June2021/BRSlJSDjyL31H6I8Ozzh.png"
+          className="w-14 h-12"
+        />
       </NavbarBrand>
       {session && status === "authenticated" ? (
         <NavbarContent justify="end">
@@ -110,18 +112,20 @@ export default function NavbarComponent() {
                 </div>
               </DropdownTrigger>
               <DropdownMenu>
-                {session.user.role === "admin" ? ( <DropdownItem
-                  onPress={() => router.push(`/dashboard`)}
-                >
-                  {" "}
-                  Dashboard{" "}
-                </DropdownItem>):( <DropdownItem
-                  onPress={() => router.push(`/profile/${session.user.id}`)}
-                >
-                  {" "}
-                  Profile{" "}
-                </DropdownItem>)}
-               
+                {session.user.role === "admin" ? (
+                  <DropdownItem onPress={() => router.push(`/dashboard`)}>
+                    {" "}
+                    Dashboard{" "}
+                  </DropdownItem>
+                ) : (
+                  <DropdownItem
+                    onPress={() => router.push(`/profile/${session.user.id}`)}
+                  >
+                    {" "}
+                    Profile{" "}
+                  </DropdownItem>
+                )}
+
                 <DropdownItem
                   key="delete"
                   className="text-danger"
@@ -137,17 +141,19 @@ export default function NavbarComponent() {
       ) : (
         <NavbarContent justify="end">
           <NavbarItem className="lg:flex">
-            <Link href={"/login"}>
-              <Button className="text-white bg-blue-500 rounded-full px-6">
-                Login
-              </Button>
+          <Link
+              href="/login"
+              className="text-white bg-blue-500 rounded-full px-6 py-2"
+            >
+              Login
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link href={"/register"}>
-              <Button className="text-blue-500 bg-white outline-blue-500 rounded-full px-6">
-                Register
-              </Button>
+          <Link
+              href="/register"
+              className="text-blue-500 bg-white outline outline-1 outline-blue-500 rounded-full px-6 py-2"
+            >
+              Register
             </Link>
           </NavbarItem>
         </NavbarContent>

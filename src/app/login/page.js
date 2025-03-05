@@ -26,6 +26,7 @@ const Login = () => {
         password: loginData.password,
         redirect: false,
       });
+      console.log(signInResult);
 
       if (signInResult.ok) {
         router.push("/profile");

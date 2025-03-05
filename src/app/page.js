@@ -50,10 +50,8 @@ export default function Home() {
               pelajaran-pelajaran penting yang mendukung jurusan kuliah impian
               mereka.
             </p>
-            <Link href={"/login"}>
-              <Button className="text-white bg-blue-500 rounded-full px-6 mt-6">
+            <Link className="text-white bg-blue-500 rounded-full px-6 py-1 mt-6" href={"/login"}>
                 Ayo Mulai !
-              </Button>
             </Link>
           </div>
         </div>
