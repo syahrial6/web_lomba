@@ -18,19 +18,18 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = async (loginData) => {
-    
     setLoading(true);
     try {
       const signInResult = await signIn("credentials", {
         email: loginData.email,
         password: loginData.password,
-        redirect: false,
+        redirect: false, // Penting: biar kita handle redirect manual
       });
       console.log(signInResult);
-
+  
       if (signInResult.ok) {
-        router.push("/profile");
-        
+        // Hard reload biar session langsung fresh dari server
+        window.location.href = "/profile";
       } else {
         Swal.fire({
           icon: "error",
@@ -39,10 +38,19 @@ const Login = () => {
           confirmButtonColor: "#3085d6",
         });
       }
+    } catch (error) {
+      console.error("Error saat login:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Terjadi Kesalahan",
+        text: "Gagal melakukan login. Silakan coba lagi.",
+        confirmButtonColor: "#3085d6",
+      });
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleSignInWithGoogle = async () => {
     try {

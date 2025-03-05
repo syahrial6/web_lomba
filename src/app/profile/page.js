@@ -5,19 +5,24 @@ import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Loading from "../components/Loading";
 
+
 const Profile = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
-  if (!session) redirect("/login");
+
+  if (!session) {
+    redirect("/login");
+  }
 
   if (session.user.role === "user") {
     redirect(`/profile/${session.user.id}`);
-  } else if (session.user.role === "admin") {
+  }
+
+  if (session.user.role === "admin") {
     redirect("/dashboard");
   }
-  else{
-    return (<Loading/>)
-  }
+
+  return <Loading />;
 };
 
 export default Profile;
+
