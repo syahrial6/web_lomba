@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import Program from "./components/Program";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
         <Hero />
       </div>
       <Program />
-      <div className="container lg:w-[85vw] grid lg:grid-cols-2 gap-4 mt-36">
+      <div className="container lg:w-[85vw] grid lg:grid-cols-2 gap-4 mt-36 mb-14">
         <div className="m-auto">
           <img
             src="./images/pilihan.svg"
@@ -50,12 +51,16 @@ export default function Home() {
               pelajaran-pelajaran penting yang mendukung jurusan kuliah impian
               mereka.
             </p>
-            <Link className="text-white bg-blue-500 rounded-full px-6 py-1 mt-6" href={"/login"}>
-                Ayo Mulai !
+            <Link
+              className="text-white bg-blue-500 rounded-full px-6 py-1 t-12"
+              href={"/login"}
+            >
+              Ayo Mulai !
             </Link>
           </div>
         </div>
       </div>
+    <Footer/>
     </div>
   );
 }

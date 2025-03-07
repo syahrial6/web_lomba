@@ -14,10 +14,12 @@ import RekomendasiAi from "@/app/components/RekomendasiAi";
 import { getNilaiByIdUser } from "@/app/actions/nilai";
 import axios from "axios";
 import NavbarComponent from "@/app/components/Navbar";
+import { set } from "zod";
 const StudentDashboard = ({ params }) => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [respon, setRespon] = useState(null);
+  console.log(respon);
 
   const fetchingData = async (userId) => {
     const { minat, error } = await getMinatByIdUser(session.user.id);
@@ -56,7 +58,7 @@ const StudentDashboard = ({ params }) => {
         }
       );
       setRespon(response.data?.candidates[0].content.parts[0].text);
-
+      
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -74,9 +76,8 @@ const StudentDashboard = ({ params }) => {
     queryFn: fetchingDataNilai,
   });
 
-  // useEffect(() => {
-  //   geminiAPI();
-  // }, [geminiAPI, queryNilai]);
+  
+  
 
   if (!session) {
     return (
@@ -111,10 +112,7 @@ const StudentDashboard = ({ params }) => {
         <TabsComponent
           profile={
             <CardProfile
-              rekomendasiJurusan={respon ? respon : <div className="flex items-center justify-center h-screen">
-                <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-              }
+              rekomendasiJurusan={respon}
               user={session?.user}
               jurusan={queryMinat?.data}
               nilai={queryNilai?.data}

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import { Typewriter } from 'react-simple-typewriter'
 
 const Hero = () => {
   return (
@@ -17,23 +18,29 @@ const Hero = () => {
             }}
             className="text-5xl font-Poppins lg:text-left sm:text-center  leading-tight lg:w-[600px] w-[300px]"
           >
+            
             Website{" "}
-            <span className="text-[#0099FF] font-bold"> Rekomendasi </span>{" "}
+            <span className="text-[#0099FF] font-bold">
+              
+               Rekomendasi </span>{" "}
             <span className="text-[#0099FF] font-bold"> Mata Pelajaran Peminatan </span>{" "}
             Siswa
           </motion.p>
-          <motion.p className="text-lg mt-12"
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 1.5,
-              delay: 0.2,
-              ease: [0, 0.21, 0.2, 1.01],
-            }}
+          <p className="text-lg mt-12 h-[100px]"
+            
           >
-            Rekomendasi dan saran pemilihan mata pelajaran peminatan kurikulum merdeka berdasarkan nilai rapor dan
-            jurusan perkuliahan pilihan dengan Artificial Inteligence (AI)
-          </motion.p>
+            <Typewriter
+            words={["Rekomendasi dan saran pemilihan mata pelajaran peminatan kurikulum merdeka berdasarkan nilai rapor dan jurusan perkuliahan pilihan dengan Artificial Inteligence (AI)"]}
+           
+            cursor
+            cursorStyle='_'
+            typeSpeed={20}
+          
+            delaySpeed={1000}
+           
+          />
+          
+          </p>
           <div className="pt-16 pb-8">
             <p className="font-bold text-2xl mb-4">
               Al-Fityan School Kubu Raya

@@ -14,8 +14,8 @@ import Image from "next/image";
 import Loading from "./Loading";
 
 const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
-  const nilaiSem1 = nilai.filter((item) => item.semester === 1);
-  const nilaiSem2 = nilai.filter((item) => item.semester === 2);
+  const nilaiSem1 = nilai ? nilai.filter((item) => item.semester === 1): [];
+  const nilaiSem2 = nilai ? nilai.filter((item) => item.semester === 2): [];
   const hapusMinat = async (id) => {
     const result = await Swal.fire({
       title: "Apakah Anda Yakin ?",
@@ -181,9 +181,8 @@ const CardProfile = ({ user, jurusan, nilai, rekomendasiJurusan }) => {
             </div>
             {jurusan.length !== 0 ? null : (
               <div className="flex gap-2">
-                <Chip color="primary">
-                  Rekomendasi Jurusan :{rekomendasiJurusan}
-                </Chip>
+                 
+              
               </div>
             )}
           </div>
